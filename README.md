@@ -1,5 +1,5 @@
 # nuxtjs-api-template
-Template for creating simple API in NuxtJS without any external servers 
+Template for creating simple *API* in __NuxtJS__ without any external servers 
 
 # Set up your project from scratch
 
@@ -9,7 +9,7 @@ Replace <project-name> with the name of your project. Then navigate into it:
     mkdir <project-name>
     cd <project-name>
 
-Then create a file named package.json from terminal:
+Then create a file named __package.json__ from terminal:
 
     touch package.json
 
@@ -31,9 +31,6 @@ Open the package.json file in your favorite code editor and fill it with this JS
 
 This command will add nuxt as a dependency to your project and it will add it to your package.json automatically. The node_modules directory will also be created which is where all your installed packages and their dependencies are stored.
 
-
-
-
 # Start the project
 
 Run your project by typing one of the following commands below in your terminal:
@@ -42,7 +39,7 @@ Run your project by typing one of the following commands below in your terminal:
 
 The application is now running on http://localhost:3000.
 
-Open it in your browser by clicking the link in your terminal and you should see the text "Hello World" we copied in the previous step.
+Open it in your browser by clicking the link in your terminal and you should see the text __"Hello World"__ we copied in the previous step.
 
 # Create  API route
 
@@ -56,7 +53,7 @@ Install packages **body-parser** and **url** into project
 
     npm install body-parser url
 
-Edit api/index.js file and put API code wraper into:
+Edit file __api/index.js__ and put API code wraper into it:
 ```
 // API Server side Init file
 import { json } from 'body-parser'
@@ -107,7 +104,7 @@ export default [
     },
 ]
 ```
-Then create test API controller. Create file api/test.js and write test method:
+Then create test API controller. Create file __api/test.js__ and write test method:
 ```
 // Test api entry
 let i = 0
