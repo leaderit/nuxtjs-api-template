@@ -144,10 +144,8 @@ You wil get JSON answer:
 
 Every update will increment i by 1. On server console you will see diagnostic message
 
-    {                                                                                               i: 1
-    }
-    {                                                                                               i: 2
-    }
+    { i: 1 }
+    { i: 2 }
 
 It is confirmed - all works correctly.
 # END OF FILE
