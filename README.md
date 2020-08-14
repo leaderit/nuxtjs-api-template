@@ -107,7 +107,7 @@ Edit api/index.js file and put API code wraper into:
         },
     ]
 
-Then create test API controller& Create file api/test.js and write test method:
+Then create test API controller. Create file api/test.js and write test method:
 
     // Test api entry
     let i = 0
