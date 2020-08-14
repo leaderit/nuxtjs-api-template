@@ -46,95 +46,95 @@ Open it in your browser by clicking the link in your terminal and you should see
 
 # Create  API route
 
-Create an empty directory with the name "api", and create the index.js file:
+Create an empty directory with the name __api__, and create the __index.js__ file:
 
     mkdir api
     cd api
     touch index.js
 
-Install packages '''body-parser''' and '''url''' into project
+Install packages **body-parser** and **url** into project
 
     npm install body-parser url
 
 Edit api/index.js file and put API code wraper into:
+```
+// API Server side Init file
+import { json } from 'body-parser'
+const url = require('url');
 
-    // API Server side Init file
-    import { json } from 'body-parser'
-    const url = require('url');
-
-    export default [
-        { path: "/api", handler: json() },
-        {
-            path: "/api",
-            handler: (req, res, next) => {
-                const url = require("url");
-                req.query = url.parse(req.url, true).query;
-                req.params = { ...req.query, ...req.body };
-                next();
+export default [
+    { path: "/api", handler: json() },
+    {
+        path: "/api",
+        handler: (req, res, next) => {
+            const url = require("url");
+            req.query = url.parse(req.url, true).query;
+            req.params = { ...req.query, ...req.body };
+            next();
+        }
+    },
+    // Controllers and Methods handler. GET - without parameters, POST - with parameters
+    {
+        path: '/api',
+        async handler (req, res, next) {
+            let url = req._parsedUrl.pathname.replace(/^\/+|\/+$|\.+/g, "");
+            url = url.split("/");
+            let method = url.pop();
+            let controller = url.slice(1).join("/");
+            let api = require("./" + controller);
+            let token = null
+            let tokenType = ''
+            if ( req.headers.authorization ) {
+                const auth = req.headers.authorization.split(' ')
+                token = auth[1].trim()
+                tokenType = auth[0].trim()
             }
-        },
-        // Controllers and Methods handler. GET - without parameters, POST - with parameters
-        {
-            path: '/api',
-            async handler (req, res, next) {
-                let url = req._parsedUrl.pathname.replace(/^\/+|\/+$|\.+/g, "");
-                url = url.split("/");
-                let method = url.pop();
-                let controller = url.slice(1).join("/");
-                let api = require("./" + controller);
-                let token = null
-                let tokenType = ''
-                if ( req.headers.authorization ) {
-                    const auth = req.headers.authorization.split(' ')
-                    token = auth[1].trim()
-                    tokenType = auth[0].trim()
-                }
 
-                // Set API context for handler
-                // Put all need variables and functions in the context
-                let context = {
-                    req,
-                    res,
-                    token,
-                    tokenType
-                }
-
-                // Bind context for API handler and call API method
-                const apiMethod = api[method].bind( context )
-                let result = await apiMethod(req.params );
-                res.end(JSON.stringify(result));
+            // Set API context for handler
+            // Put all need variables and functions in the context
+            let context = {
+                req,
+                res,
+                token,
+                tokenType
             }
-        },
-    ]
 
+            // Bind context for API handler and call API method
+            const apiMethod = api[method].bind( context )
+            let result = await apiMethod(req.params );
+            res.end(JSON.stringify(result));
+        }
+    },
+]
+```
 Then create test API controller. Create file api/test.js and write test method:
+```
+// Test api entry
+let i = 0
 
-    // Test api entry
-    let i = 0
+async function index() {
+    i = i +1
+    console.log( { i } )
+    return ( { status: 'ok', i } )        
+}
 
-    async function index() {
-        i = i +1
-        console.log( { i } )
-        return ( { status: 'ok', i } )        
-    }
+export {
+    index
+}
+```
 
-    export {
-        index
-    }
+Then create or update file **nuxt.config.js** with this additionals:
+```
+import serverMiddleware from './api'
 
-
-Then create or update file nuxt.config.js with this additionals:
-
-    import serverMiddleware from './api'
-
-    export default {
-        serverMiddleware
-    }
-
+export default {
+    serverMiddleware
+}
+```
 
 # Test API entry
 
-open api entry url in browser:
+Open api entry url in browser:
 
     http://localhost:3000/api/test/index
 
@@ -142,7 +142,7 @@ You wil get JSON answer:
 
     {"status":"ok","i":1}
 
-Every update will increment i by 1. On server console you will see diagnostic message
+Every update will increment i by 1. On server console you will see diagnostic message:
 
     { i: 1 }
     { i: 2 }
