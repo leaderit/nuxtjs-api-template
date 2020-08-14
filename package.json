@@ -1,0 +1,14 @@
+{
+  "name": "nuxtjs-api-template",
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "start": "nuxt start"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "nuxt": "^2.14.1",
+    "url": "^0.11.0"
+  }
+}
